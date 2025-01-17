@@ -11,6 +11,7 @@ class Connections
         this.connections.push(connection);
         console.log(`Connection added for ID: ${connection.getId()}`);
         this.connectionsEmitter.emit('change');
+        this.logConnections();
 
     }
 
@@ -19,11 +20,12 @@ class Connections
         this.connections = this.connections.filter(c => c.getId() !== connection.getId());
         console.log(`Connection removed for ID: ${connection.getId()}`);
         this.connectionsEmitter.emit('change');
+        this.logConnections();
     }
 
-    get connections()
+    logConnections()
     {
-        return this.connections;
+        this.connections.forEach(c => console.log(c.getId()));
     }
 }
 
