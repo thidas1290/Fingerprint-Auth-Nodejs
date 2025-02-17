@@ -189,6 +189,7 @@ app.ws('/', (_ws, req) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                eventId: client.getEventId(),
                 id: data['payload']['id'],
                 template: data['payload']
             })
@@ -202,6 +203,21 @@ app.ws('/', (_ws, req) => {
       else if (data['msg'] == "DELETE_COMPLETE")
       {
         client.onResponse();
+      }
+      else if (data['msg'] == "AUTH")
+      {
+        fetch(webHookEndpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                // eventId: client.getEventId(),
+                id: data['payload']['id'],
+                template: data['payload']
+            })
+        })
+        client.setEventId(0);
       }
 
     });
